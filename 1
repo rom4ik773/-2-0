@@ -1,0 +1,107 @@
+домашнее задание по less1
+
+сортировка пузырьком
+================================
+
+package main
+
+import "fmt"
+
+func bubbleSort(arr [100]int) [100]int {
+    n := len(arr)
+    for i := 0; i < n-1; i++ {
+        for j := 0; j < n-i-1; j++ {
+            if arr[j] > arr[j+1] {
+                arr[j], arr[j+1] = arr[j+1], arr[j]
+            }
+        }
+    }
+    return arr
+}
+
+func main() {
+    arr := [100]int{542,-565,531,-294,-56,14,270,-51,-914,605,-117,-768,331,708,-603,84,-548,579,434,751,592,-349,408,-602,721,909,170,-432,-970,-171,-972,316,405,-676,-929,-795,-682,-646,46,-609,-84,180,-158,-662,-384,854,-721,39,180,-197,-818,-946,-529,-555,-36,-853,-322,540,-936,-919,473,978,782,586,869,333,-977,-548,-789,988,-393,807,-609,997,824,-480,-205,-576,856,494,131,40,-601,467,221,-640,34,-220,482,948,523,-27,-771,-914,438,957,205,-411,-749,-723}
+
+    sortedArr := bubbleSort(arr)
+
+    for i := 0; i < 100; i++ {
+        fmt.Println(sortedArr[i])
+    }
+}
+
+======================================
+
+Задание 2
+
+Написать программу которая хранит данные об офисных сотрудниках, сделать операцию добавления и удаления, максимум сколько можно добавить сотрудников 512
+
+
+=======================================
+
+package main
+
+import "fmt"
+
+type Employee struct {
+ Name     string
+ Age      int
+ Position string
+ Salary   int
+}
+
+func main() {
+ const size = 512
+ empls := make([]*Employee, size)
+ for {
+  var cmd int
+  fmt.Println("1 - Добавить нового сотрудника")
+  fmt.Println("2 - Удалить сотрудника")
+  fmt.Println("3 - Вывести список сотрудников")
+  fmt.Println("4 - Выйти из программы")
+  fmt.Print("Выберите действие: ")
+  fmt.Scanln(&cmd)
+
+  switch cmd {
+  case 1:
+   newEmployee := Employee{}
+   fmt.Println("Имя:")
+   fmt.Scanf("%s", &newEmployee.Name)
+   fmt.Println("Возраст:")
+   fmt.Scanf("%d", &newEmployee.Age)
+   fmt.Println("Позиция:")
+   fmt.Scanf("%s", &newEmployee.Position)
+   fmt.Println("Зарплата:")
+   fmt.Scanf("%d", &newEmployee.Salary)
+
+   for i := 0; i < size; i++ {
+    if empls[i] == nil {
+     empls[i] = &newEmployee
+     break
+    }
+   }
+  case 2:
+   var index int
+   fmt.Println("Введите номер сотрудника для удаления:")
+   fmt.Scanf("%d", &index)
+   if index >= 1 && index <= size {
+    empls[index-1] = nil
+   } else {
+    fmt.Println("Некорректный номер сотрудника")
+   }
+  case 3:
+   fmt.Println("Список сотрудников:")
+   for i, employee := range empls {
+    if employee != nil {
+     fmt.Printf("%d. Имя: %s, Возраст: %d, Позиция: %s, Зарплата: %d\n", i+1, employee.Name, employee.Age, employee.Position, employee.Salary)
+    }
+   }
+  case 4:
+   fmt.Println("Программа завершена")
+   return
+  default:
+   fmt.Println("Некорректная команда")
+  }
+ }
+}
+
+==============================================

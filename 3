@@ -1,0 +1,189 @@
+Вынести структуры данных в отдельные пакеты: 
+Переделать функции, которые обрабатывают структуры данных, в методы
+Сделать структуры данных на дженериках
+
+stack
+
+
+package stack
+
+type Stack[T any] struct {
+	s    []T
+	head int
+}
+
+func NewStackT any *Stack[T] {
+	return &Stack[T]{s: make([]T, size), head: -1}
+}
+
+func (s *Stack[T]) Push(v T) {
+	if s.head == len(s.s)-1 {
+		fmt.Println("Стек полон")
+		return
+	}
+	s.head++
+	s.s[s.head] = v
+}
+
+func (s *Stack[T]) Pop() (T, bool) {
+	if s.head == -1 {
+		fmt.Println("Стек пуст")
+		return zero(T), false
+	}
+	v := s.s[s.head]
+	s.head--
+	return v, true
+}
+
+func (s *Stack[T]) Peek() (T, bool) {
+	if s.head == -1 {
+		fmt.Println("Стек пуст")
+		return zero(T), false
+	}
+	return s.s[s.head], true
+}
+
+func zeroT any T {
+	var z T
+	return z
+}
+
+
+queue
+
+
+package queue
+
+type Queue[T any] struct {
+	s    []T
+	low  int
+	high int
+	size int
+}
+
+func NewQueueT any *Queue[T] {
+	return &Queue[T]{
+		s:    make([]T, size),
+		low:  -1,
+		high: -1,
+		size: size,
+	}
+}
+
+func (q *Queue[T]) Push(v T) {
+	if q.high == q.size-1 {
+		fmt.Println("Очередь полна")
+		return
+	}
+	if q.high == -1 {
+		q.low = 0
+	}
+	q.high++
+	q.s[q.high] = v
+}
+
+func (q *Queue[T]) Pop() (T, bool) {
+	if q.low == -1 {
+		fmt.Println("Очередь пуста")
+		return zero(T), false
+	}
+	v := q.s[q.low]
+	if q.low == q.high {
+		q.low = -1
+		q.high = -1
+	} else {
+		q.low++
+	}
+	return v, true
+}
+
+func zeroT any T {
+	var z T
+	return z
+}
+
+
+SinglyLinkedList
+
+
+package singlylinkedlist
+
+type Item[T any] struct {
+	v    T
+	next *Item[T]
+}
+
+type SinglyLinkedList[T any] struct {
+	first *Item[T]
+	last  *Item[T]
+	size  int
+}
+
+func NewSinglyLinkedListT any *SinglyLinkedList[T] {
+	return &SinglyLinkedList[T]{}
+}
+
+func (l *SinglyLinkedList[T]) Add(v T) {
+	newItem := &Item[T]{v: v}
+	if l.first == nil {
+		l.first = newItem
+	} else {
+		l.last.next = newItem
+	}
+	l.last = newItem
+	l.size++
+}
+
+func (l *SinglyLinkedList[T]) Get(idx int) (T, bool) {
+	if idx < 0 || idx >= l.size {
+		fmt.Println("Индекс вне диапазона")
+		return zero(T), false
+	}
+	current := l.first
+	for i := 0; i < idx; i++ {
+		current = current.next
+	}
+	return current.v, true
+}
+
+func (l *SinglyLinkedList[T]) Remove(idx int) bool {
+	if idx < 0 || idx >= l.size {
+		fmt.Println("Индекс вне диапазона")
+		return false
+	}
+	if idx == 0 {
+		l.first = l.first.next
+		if l.first == nil {
+			l.last = nil
+		}
+	} else {
+		current := l.first
+		for i := 0; i < idx-1; i++ {
+			current = current.next
+		}
+		current.next = current.next.next
+		if current.next == nil {
+			l.last = current
+		}
+	}
+	l.size--
+	return true
+}
+
+func (l *SinglyLinkedList[T]) Values() []T {
+	values := make([]T, l.size)
+	current := l.first
+	i := 0
+	for current != nil {
+		values[i] = current.v
+		current = current.next
+		i++
+	}
+	return values
+}
+
+func zeroT any T {
+	var z T
+	return z
+}
+

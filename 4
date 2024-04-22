@@ -1,0 +1,350 @@
+написать тесты на функции сортировки
+
+стек
+
+package main
+
+import (
+	"reflect"
+	"testing"
+)
+
+func TestStack(t *testing.T) {
+	s := newStack(5)
+
+	push(s, 1)
+	push(s, 2)
+	push(s, 3)
+
+	if peek(s) != 3 {
+		t.Errorf("Expected top value to be 3, got %v", peek(s))
+	}
+
+	if pop(s) != 3 {
+		t.Errorf("Expected popped value to be 3, got %v", pop(s))
+	}
+
+	if pop(s) != 2 {
+		t.Errorf("Expected popped value to be 2, got %v", pop(s))
+	}
+
+	if pop(s) != 1 {
+		t.Errorf("Expected popped value to be 1, got %v", pop(s))
+	}
+
+	if pop(s) != nil {
+		t.Errorf("Expected empty stack, got %v", pop(s))
+	}
+}
+
+
+очередь
+
+package main
+
+import (
+	"reflect"
+	"testing"
+)
+
+func TestQueue(t *testing.T) {
+	q := newQueue(5)
+
+	push(q, 1)
+	push(q, 2)
+	push(q, 3)
+
+	if pop(q) != 1 {
+		t.Errorf("Expected popped value to be 1, got %v", pop(q))
+	}
+
+	if pop(q) != 2 {
+		t.Errorf("Expected popped value to be 2, got %v", pop(q))
+	}
+
+	if pop(q) != 3 {
+		t.Errorf("Expected popped value to be 3, got %v", pop(q))
+	}
+
+	if pop(q) != nil {
+		t.Errorf("Expected empty queue, got %v", pop(q))
+	}
+}
+
+
+односвязанный список
+
+package main
+
+import (
+	"reflect"
+	"testing"
+)
+
+func TestSinglyLinkedList(t *testing.T) {
+	l := newSinglyLinkedList()
+
+	add(l, 1)
+	add(l, 2)
+	add(l, 3)
+
+	if get(l, 0) != 1 {
+		t.Errorf("Expected value at index 0 to be 1, got %v", get(l, 0))
+	}
+
+	if get(l, 1) != 2 {
+		t.Errorf("Expected value at index 1 to be 2, got %v", get(l, 1))
+	}
+
+	if get(l, 2) != 3 {
+		t.Errorf("Expected value at index 2 to be 3, got %v", get(l, 2))
+	}
+
+	remove(l, 1)
+
+	if get(l, 1) != 3 {
+		t.Errorf("Expected value at index 1 to be 3, got %v", get(l, 1))
+	}
+}
+
+
+двусвязанный список
+
+package main
+
+import (
+	"reflect"
+	"testing"
+)
+
+func TestDoublyLinkedList(t *testing.T) {
+	l := newDoublyLinkedList()
+
+	add(l, 1)
+	add(l, 2)
+	add(l, 3)
+
+	if get(l, 0) != 1 {
+		t.Errorf("Expected value at index 0 to be 1, got %v", get(l, 0))
+	}
+
+	if get(l, 1) != 2 {
+		t.Errorf("Expected value at index 1 to be 2, got %v", get(l, 1))
+	}
+
+	if get(l, 2) != 3 {
+		t.Errorf("Expected value at index 2 to be 3, got %v", get(l, 2))
+	}
+
+	remove(l, 1)
+
+	if get(l, 1) != 3 {
+		t.Errorf("Expected value at index 1 to be 3, got %v", get(l, 1))
+	}
+}
+
+
+бинарное дерево
+
+package main
+
+import (
+	"reflect"
+	"testing"
+)
+
+func TestTree(t *testing.T) {
+	t := newTree()
+
+	add(t, 2)
+	add(t, 1)
+	add(t, 3)
+
+	expected := []int{1, 2, 3}
+	if !reflect.DeepEqual(values(t), expected) {
+		t.Errorf("Expected values to be %v, got %v", expected, values(t))
+	}
+
+	remove(t, 2)
+
+	expected = []int{1, 3}
+	if !reflect.DeepEqual(values(t), expected) {
+		t.Errorf("Expected values to be %v, got %v", expected, values(t))
+	}
+}
+
+
+тесты на операции со структурами данных
+
+стек
+
+func TestStackOperations(t *testing.T) {
+	s := newStack(5)
+
+	push(s, 1)
+	push(s, 2)
+	push(s, 3)
+
+	if peek(s) != 3 {
+		t.Errorf("Expected top value to be 3, got %v", peek(s))
+	}
+
+	if pop(s) != 3 {
+		t.Errorf("Expected popped value to be 3, got %v", pop(s))
+	}
+
+	push(s, 4)
+	push(s, 5)
+
+	if pop(s) != 5 {
+		t.Errorf("Expected popped value to be 5, got %v", pop(s))
+	}
+
+	if pop(s) != 4 {
+		t.Errorf("Expected popped value to be 4, got %v", pop(s))
+	}
+
+	if pop(s) != 2 {
+		t.Errorf("Expected popped value to be 2, got %v", pop(s))
+	}
+
+	if pop(s) != 1 {
+		t.Errorf("Expected popped value to be 1, got %v", pop(s))
+	}
+
+	if pop(s) != nil {
+		t.Errorf("Expected empty stack, got %v", pop(s))
+	}
+}
+
+
+очередь
+
+func TestQueueOperations(t *testing.T) {
+	q := newQueue(5)
+
+	push(q, 1)
+	push(q, 2)
+	push(q, 3)
+
+	if pop(q) != 1 {
+		t.Errorf("Expected popped value to be 1, got %v", pop(q))
+	}
+
+	push(q, 4)
+	push(q, 5)
+
+	if pop(q) != 2 {
+		t.Errorf("Expected popped value to be 2, got %v", pop(q))
+	}
+
+	if pop(q) != 3 {
+		t.Errorf("Expected popped value to be 3, got %v", pop(q))
+	}
+
+	if pop(q) != 4 {
+		t.Errorf("Expected popped value to be 4, got %v", pop(q))
+	}
+
+	if pop(q) != 5 {
+		t.Errorf("Expected popped value to be 5, got %v", pop(q))
+	}
+
+	if pop(q) != nil {
+		t.Errorf("Expected empty queue, got %v", pop(q))
+	}
+}
+
+односвязанный список
+
+func TestSinglyLinkedListOperations(t *testing.T) {
+	l := newSinglyLinkedList()
+
+	add(l, 1)
+	add(l, 2)
+	add(l, 3)
+
+	if get(l, 1) != 2 {
+		t.Errorf("Expected value at index 1 to be 2, got %v", get(l, 1))
+	}
+
+	remove(l, 1)
+
+	if get(l, 1) != 3 {
+		t.Errorf("Expected value at index 1 to be 3, got %v", get(l, 1))
+	}
+
+	add(l, 4)
+	add(l, 5)
+
+	if get(l, 2) != 4 {
+		t.Errorf("Expected value at index 2 to be 4, got %v", get(l, 2))
+	}
+
+	if get(l, 3) != 5 {
+		t.Errorf("Expected value at index 3 to be 5, got %v", get(l, 3))
+	}
+}
+
+двусвязанный список
+
+func TestDoublyLinkedListOperations(t *testing.T) {
+	l := newDoublyLinkedList()
+
+	add(l, 1)
+	add(l, 2)
+	add(l, 3)
+
+	if get(l, 1) != 2 {
+		t.Errorf("Expected value at index 1 to be 2, got %v", get(l, 1))
+	}
+
+	remove(l, 1)
+
+	if get(l, 1) != 3 {
+		t.Errorf("Expected value at index 1 to be 3, got %v", get(l, 1))
+	}
+
+	add(l, 4)
+	add(l, 5)
+
+	if get(l, 2) != 4 {
+		t.Errorf("Expected value at index 2 to be 4, got %v", get(l, 2))
+	}
+
+	if get(l, 3) != 5 {
+		t.Errorf("Expected value at index 3 to be 5, got %v", get(l, 3))
+	}
+}
+
+
+бинарное дерево
+
+func TestTreeOperations(t *testing.T) {
+	t := newTree()
+
+	add(t, 5)
+	add(t, 3)
+	add(t, 7)
+	add(t, 2)
+	add(t, 4)
+
+	expected := []int{2, 3, 4, 5, 7}
+	if !reflect.DeepEqual(values(t), expected) {
+		t.Errorf("Expected values to be %v, got %v", expected, values(t))
+	}
+
+	remove(t, 3)
+
+	expected = []int{2, 4, 5, 7}
+	if !reflect.DeepEqual(values(t), expected) {
+		t.Errorf("Expected values to be %v, got %v", expected, values(t))
+	}
+
+	remove(t, 5)
+
+	expected = []int{2, 4, 7}
+	if !reflect.DeepEqual(values(t), expected) {
+		t.Errorf("Expected values to be %v, got %v", expected, values(t))
+	}
+}
